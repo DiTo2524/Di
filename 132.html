@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Айналу денелері</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <script type="module">
+  import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/controls/OrbitControls.js';
+  // ...
+</script>
+
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <header class="bg-blue-600 text-white p-4 text-center text-2xl font-bold">
+    Фигураларды айналдыр — геометрияны үйрен!
+  </header>
+
+  <nav class="flex justify-center space-x-4 bg-blue-100 p-3">
+    <button class="px-4 py-2 bg-blue-500 text-white rounded">Оқуды бастау</button>
+    <button class="px-4 py-2 bg-green-500 text-white rounded">Кіру</button>
+    <button class="px-4 py-2 bg-purple-500 text-white rounded">Жоба туралы</button>
+  </nav>
+
+  <main class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+    <section class="bg-white p-4 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">Теория</h2>
+      <p>Айналу денелерін интерактивті модельдер мен анимациялар арқылы үйрен.</p>
+      <canvas id="sceneCanvas" width="400" height="300"></canvas>
+    </section>
+
+    <section class="bg-white p-4 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">Видеосабақтар</h2>
+      <p>Әр тақырыпқа 1 минуттық қысқа видео.</p>
+      <button class="mt-2 px-4 py-2 bg-yellow-500 text-white rounded">Түсінбедім? Қайта түсіндір!</button>
+    </section>
+
+    <section class="bg-white p-4 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">Тесттер мен есептер</h2>
+      <p>Өзіңді тексер: қиындық деңгейлері және бірден жауап алу.</p>
+      <button class="mt-2 px-4 py-2 bg-indigo-500 text-white rounded">Тестті бастау</button>
+    </section>
+
+    <section class="bg-white p-4 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">Қарым-қатынас</h2>
+      <textarea class="w-full border p-2 rounded" placeholder="Сұрағыңызды жазыңыз..."></textarea>
+    </section>
+
+    <section class="bg-white p-4 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">Глоссарий</h2>
+      <input type="text" placeholder="Терминді іздеу..." class="w-full p-2 border rounded" />
+    </section>
+
+    <section class="bg-white p-4 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">AI көмекші</h2>
+      <p>Виртуалды ассистент тапсырмаларды орындауға көмектеседі.</p>
+      <button class="mt-2 px-4 py-2 bg-red-500 text-white rounded">AI-мен сөйлесу</button>
+    </section>
+  </main>
+
+  <script type="module">
+    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js';
+    import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/controls/OrbitControls.js';
+
+    const canvas = document.getElementById('sceneCanvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas });
+    renderer.setSize(canvas.width, canvas.height);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.rotateSpeed = 0.5;
+
+    const cylinder = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, 2, 32), new THREE.MeshNormalMaterial());
+    cylinder.position.x = -3;
+    scene.add(cylinder);
+
+    const cone = new THREE.Mesh(new THREE.ConeGeometry(1, 2, 32), new THREE.MeshNormalMaterial());
+    cone.position.x = 0;
+    scene.add(cone);
+
+    const sphere = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 32), new THREE.MeshNormalMaterial());
+    sphere.position.x = 3;
+    scene.add(sphere);
+
+    camera.position.z = 6;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
